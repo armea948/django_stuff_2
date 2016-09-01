@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Dashboard</title>
+<style>
+  .button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  }
+</style>
+</head>
+  <form method="POST">
+  {% csrf_token %}
+  <fieldset>
+    <legend>Report Settings</legend>
+    <body>
+      <!--<form action="SelectBy" method="POST">-->
+      <p style="text-align:justify">View Report By:</p>
+      <select name="report_type">
+        <option value="">Select Report Type</option>
+        <option value="Bonia">Bonia</option>
+      </select>
+      <p/>
+      <!--
+      <div class="fieldWrapper">
+      <select for="{{ form.select.id_for_select }}"> Your select:</select>
+        {{ form.select }}
+      </div>
+      -->
+      <!--</form>-->
+      <!--<form action="DateRange" method="POST">-->
+      <table>
+      <tr>
+        <th>Date Started:</th>
+        <th>Date Ended:</th>
+      </tr>
+      <tr>
+        <th><input type="date" name="start"></th>
+        <th><input type="date" name="end"></th>
+      </tr>
+      </table>
+     <!--</form>-->
+     <!--<form action="ReportBy" method="POST">-->
+     <p>Report by: 
+     <input type="radio" name="report_type" value="" checked> Google Analytics 
+     <input type="radio" name="report_type" value="" > Adwords
+     <input type="radio" name="report_type" value="" > Facebook<br>
+     <input type="Submit" name="submit" class="button" value="Submit">
+     <!--</form>-->
+    </body>
+  </fieldset>
+  </form>
+</html>

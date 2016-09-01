@@ -1,0 +1,22 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DATA BONIA List</title>
+
+
+
+{% block title %}Lists of DATA{% endblock %}
+
+{% block content %}
+{% for items in data %}
+<p> <li> source: {{ items.get_source }}. </p>
+<p> <li> pageview: {{ items.get_pageview }}. </p>
+<p> <li> bounce rate: {{ items.get_bouncerate }}. </p>
+<p> <li> transactions : {{ items.get_transactions }}. </p>
+<p> ========================================================================= </p>
+{% endfor %}
+{% endblock %}
+</head>
+<body>

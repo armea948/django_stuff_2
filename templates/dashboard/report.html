@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<form method="post">
+
+    {% csrf_token %}
+    <!--
+    View Report By: <br>
+    {% for item in form %}
+        {{ item.label_tag }} {{ item }}
+    {% endfor %}
+    <br>
+    -->
+    <table border="1">
+        <tr>
+            <th></th>
+            {% for item in Dates%}
+            <th>{{item.label_tag}} {{item}}</th>
+            {% endfor %}
+        </tr>
+        <tr>
+            <td>Pageviews</td>
+            {% for pv_item in Pageview%}
+            <td>{{pv_item.label_tag}} {{pv_item}}</td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <td>Bouncerate</td>
+            {% for b_item in Bouncerate%}
+            <td>{{b_item.label_tag}} {{b_item}}</td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <td>Transactions</td>
+            {% for t_item in Transaction%}
+            <td>{{t_item.label_tag}} {{t_item}}</td>
+            {% endfor %}
+        </tr>
+        
+    </table><br>
+    
+    
+    <!--
+    View Report By: <br>
+    {% for item in rep_type %}
+        {{ item.label_tag }} {{ item }}
+    {% endfor %}
+    -->
+    <input type="submit" value="Go back" />
+</form>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+
+<form method="post">
+{% csrf_token %}
+    <p>Index</p>
+    
+    <table>
+        <tr>
+            <th>Date Started:</th>
+            <th>Date Ended:</th>
+        </tr>
+        <tr>
+            <th><input type="date" name="n_start"></th>
+            <th><input type="date" name="n_end"></th>
+        </tr>
+        <tr><th><p>Compare To:</p></th></tr>
+        <tr>
+            <th>Date Started:</th>
+            <th>Date Ended:</th>
+        </tr>
+        <tr>
+            <th><input type="date" name="p_start"></th>
+            <th><input type="date" name="p_end"></th>
+        </tr>
+        
+    </table><br>
+    <!--
+    View Report By: <br>
+    {% for item in rep_type %}
+        {{ item.label_tag }} {{ item }}
+    {% endfor %}
+    -->
+    
+    <input type="submit" value="Submit" />
+</form>
