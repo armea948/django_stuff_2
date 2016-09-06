@@ -12,6 +12,6 @@ urlpatterns = [
         url(r'^$', views.index, name='index'),
         url(r'^forms$', views.get_name, name='forms'),
         url(r'^embed_api$', views.embed_api, name='embed_api'),
-        url(r'^report$', views.new_dateranges, name='report'),
+        #url(r'^report$', views.new_dateranges, name='report'),
 ]
         

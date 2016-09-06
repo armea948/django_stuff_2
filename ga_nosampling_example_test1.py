@@ -137,9 +137,11 @@ def print_results(results, pag_index, start_date, end_date, profile):
     print("PROFILE: ", profile)
     try:
         GA_Data.objects.filter(date_start__exact=start_date).filter(date_end__exact=end_date).get()
+        print("try-except")
     except ObjectDoesNotExist:
         addToModel = GA_Data(pageview = total[0], bouncerate = total[1], transactions = total[2], date_start= start_date, date_end=end_date)
         addToModel.save()
+    print ("Hehe..")
     print (total)
     return None
 
