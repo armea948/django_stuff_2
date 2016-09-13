@@ -16,7 +16,8 @@ class ReportSettingsForm(forms.Form):
 
 class NameForm(forms.Form):
     #your_name = forms.CharField(label='Your name', max_length=100)
-    something = forms.ChoiceField(choices = [(1,''), (2,'Bonia Indonesia')], label="", initial='', widget=forms.Select(), required=True)
+                                            #(value, key)
+    something = forms.ChoiceField(choices = [('Bonia Indonesia','Bonia Indonesia'), ('www.thebodyshop.com.my','www.thebodyshop.com.my')], label="", initial='', widget=forms.Select(), required=True)
     
 class DateForm(forms.Form):    
     n_start = forms.DateField(initial=datetime.now().date())

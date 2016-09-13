@@ -6,9 +6,9 @@ import os
 from dashboard.models import GA_Data
 # Create your views here.
 
-def something(d_start, d_end, p_start, p_end):
-    current = GA_Data.objects.filter(date_start__exact=d_start).filter(date_end__exact=d_end).get() 
-    previous = GA_Data.objects.filter(date_start__exact=p_start).filter(date_end__exact=p_end).get() 
+def something(d_start, d_end, p_start, p_end, profile):
+    current = GA_Data.objects.filter(date_start__exact=d_start).filter(date_end__exact=d_end).filter(profile__exact=profile).get() 
+    previous = GA_Data.objects.filter(date_start__exact=p_start).filter(date_end__exact=p_end).filter(profile__exact=profile).get() 
     perc_pv = round((((current.pageview/(current.pageview+previous.pageview)) * 100)-((previous.pageview/(current.pageview+previous.pageview)) * 100)),2)
     perc_bounce = round((((current.bouncerate/(current.bouncerate+previous.bouncerate)) * 100)-((previous.bouncerate/(current.bouncerate+previous.bouncerate)) * 100)), 2)
     perc_trans = round((((current.transactions/(current.transactions+previous.transactions)) * 100)-((previous.transactions/(current.transactions+previous.transactions)) * 100)), 2)
@@ -39,14 +39,14 @@ def get_name(request):
         typeForm = TypeForm(request.POST)
         print ("HERE")
         # check whether it's valid:
-        print(dateForm.is_valid())
-        if dateForm.is_valid():# and typeForm.is_valid() and form.is_valid() :
+        if dateForm.is_valid() and form.is_valid():# and typeForm.is_valid() and form.is_valid() :
             print ("HERE")
-            #select = form.cleaned_data['something']
+            select = form.cleaned_data['something']
             d_start = dateForm.cleaned_data['n_start']
             d_end = dateForm.cleaned_data['n_end']
             p_start = dateForm.cleaned_data['p_start']
             p_end = dateForm.cleaned_data['p_end']
+            print ('select: ',select)
             #rep_type = typeForm.cleaned_data['rep_type']
             #print("SELECTED: ", select)
             print ('Start: ', str(d_start))
@@ -56,12 +56,12 @@ def get_name(request):
             #print ('Report By: ', rep_type)
             # process the data in form.cleaned_data as required
             # ...
-            path = str(os.path.dirname(os.path.realpath('ga_nosampling_example_test1.py'))) + 'ga_nosampling_example_test1.py'
+            path = str(os.path.dirname(os.path.realpath('ga_nosampling_example_test1.py'))) + '\ga_nosampling_example_test1.py'
             #start(str(p_start), str(p_end), 2)
             # redirect to a new URL:
-            ga_nosampling_example_test1.start(str(d_start), str(d_end), str(p_start), str(p_end), path)
+            ga_nosampling_example_test1.start(str(d_start), str(d_end), str(p_start), str(p_end), path, select)
             
-            return render(request, 'dashboard/report.html', something(str(d_start), str(d_end), str(p_start), str(p_end)))#{'current': current, 'previous': previous})#
+            return render(request, 'dashboard/report.html', something(str(d_start), str(d_end), str(p_start), str(p_end), select))#{'current': current, 'previous': previous})#
 
     # if a GET (or any other method) we'll create a blank form
     else:
