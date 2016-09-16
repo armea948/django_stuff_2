@@ -55,7 +55,7 @@ def get_name(request):
             #print ('Report By: ', rep_type)
             # process the data in form.cleaned_data as required
             # ...
-            path = str(os.path.dirname(os.path.realpath('ga_nosampling_example_test1.py'))) + '\ga_nosampling_example_test1.py'
+            path = str(os.path.dirname(os.path.realpath('ga_nosampling_example_test1.py'))) + 'ga_nosampling_example_test1.py'
             #start(str(p_start), str(p_end), 2)
             # redirect to a new URL:
             ga_nosampling_example_test1.start(str(d_start), str(d_end), str(p_start), str(p_end), path, select)
