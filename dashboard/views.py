@@ -41,14 +41,13 @@ def get_name(request):
         # check whether it's valid:
         if dateForm.is_valid() and form.is_valid():# and typeForm.is_valid() and form.is_valid() :
             print ("HERE")
-            select = form.cleaned_data['something']
+            select = form.cleaned_data['something']         #you can only clean data after it's validated
             d_start = dateForm.cleaned_data['n_start']
             d_end = dateForm.cleaned_data['n_end']
             p_start = dateForm.cleaned_data['p_start']
             p_end = dateForm.cleaned_data['p_end']
             print ('select: ',select)
             #rep_type = typeForm.cleaned_data['rep_type']
-            #print("SELECTED: ", select)
             print ('Start: ', str(d_start))
             print ('End: ', str(d_end))
             print ('Start: ', p_start)
