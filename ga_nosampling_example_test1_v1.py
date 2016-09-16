@@ -30,7 +30,7 @@ from oauth2client.client import AccessTokenRefreshError
 from dashboard.models import GA_Data
 from django.core.exceptions import ObjectDoesNotExist
 
-profile_ids = {'Bonia Indonesia':  '121438335','www.thebodyshop.com.my': '32532042'}
+profile_ids = {'Bonia Indonesia':  '121438335'}
 
 class SampledDataError(Exception): pass
 
@@ -49,8 +49,6 @@ def main(argv, profile):
             for start_date, end_date in date_ranges:
                 limit = ga_query(service, profile_id, 0,
                                  start_date, end_date).get('totalResults')
-                if limit == 0:
-                    limit = 1
                 for pag_index in range(0, limit, 10000):
                     results = ga_query(service, profile_id, pag_index,
                                      start_date, end_date)
@@ -83,7 +81,7 @@ def ga_query(service, profile_id, pag_index, start_date, end_date):
       ids='ga:' + profile_id,
       start_date=start_date,
       end_date=end_date,
-      metrics='ga:pageviews, ga:bounceRate, ga:transactions, ga:sessions, ga:impressions, ga:adClicks, ga:CTR, ga:costPerTransaction',
+      metrics='ga:pageviews, ga:bounceRate, ga:transactions, ga:sessions, ga:impressions',
       dimensions='ga:source',
       sort='-ga:pageviews',
       samplingLevel='HIGHER_PRECISION',
@@ -98,7 +96,7 @@ def print_results(results, pag_index, start_date, end_date, profile):
     Args:
         results: The response returned from the Core Reporting API.
     """
-    total = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    total = [0.0, 0.0, 0.0, 0.0, 0.0]
     ctr = 0
     # New write header
     path = 'bonia' #replace with path to your folder where csv file with data will be written
@@ -132,28 +130,16 @@ def print_results(results, pag_index, start_date, end_date, profile):
     
         else:
             print ('No Rows Found')
-            try:
-                GA_Data.objects.filter(date_start__exact=start_date).filter(date_end__exact=end_date).filter(profile__exact=profile).get()
-            except ObjectDoesNotExist:
-                addToModel = GA_Data(pageview = total[0], bouncerate = total[1], 
-                             transactions = total[2], sessions = total[3], 
-                             impressions = total[4], adClicks = total[5], 
-                             ctr = total[6], costPerTransaction = total[7], 
-                             date_start= start_date, date_end=end_date, profile = profile)
         writer.writerow(total)
         limit = results.get('totalResults')
         print (pag_index, 'of about', int(round(limit, -4)), 'rows.')
     print ("Total row: ", ctr)
     print("PROFILE: ", profile)
     try:
-        GA_Data.objects.filter(date_start__exact=start_date).filter(date_end__exact=end_date).filter(profile__exact=profile).get()
+        GA_Data.objects.filter(date_start__exact=start_date).filter(date_end__exact=end_date).get()
         print("try-except")
     except ObjectDoesNotExist:
-        addToModel = GA_Data(pageview = total[0], bouncerate = total[1], 
-                             transactions = total[2], sessions = total[3], 
-                             impressions = total[4], adClicks = total[5], 
-                             ctr = total[6], costPerTransaction = total[7], 
-                             date_start= start_date, date_end=end_date, profile = profile)
+        addToModel = GA_Data(pageview = total[0], bouncerate = total[1], transactions = total[2], date_start= start_date, date_end=end_date)
         addToModel.save()
     print ("Hehe..")
     print (total)
@@ -167,17 +153,17 @@ def print_results(results, pag_index, start_date, end_date, profile):
 
 # Uncomment this line & replace with 'profile name': 'id' to query a single profile
 # Delete or comment out this line to loop over multiple profiles.
-def start(s1, e1, s2, e2, path, prof_key):
+def start(s1, e1, s2, e2, path):
     global date_ranges
     date_ranges= [(s1,e1),(s2,e2)]
     print (date_ranges)
-    #for profile in sorted(profile_ids):
-    print('enter main')
-    #if __name__ == '__main__': 
-    #main(sys.argv, profile, ctr)
-    main([path], prof_key)
-    print ('leave main')
-    print ("Profile done. Next profile...")
+    for profile in sorted(profile_ids):
+        print('enter main')
+        #if __name__ == '__main__': 
+        #main(sys.argv, profile, ctr)
+        main([path], profile)
+        print ('leave main')
+        print ("Profile done. Next profile...")
         
     
     print ("All profiles done.")

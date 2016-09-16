@@ -4,15 +4,14 @@
 <form method="post">
 
 {% csrf_token %}    
-    <!--
-    View Report By: <br>
+    
+    View Report From: <br>
     {% for item in form %}
         {{ item.label_tag }} {{ item }}
     {% endfor %}
     <br>
-    -->
+    <br>
 
-    <p> ENTERED ELSE.. therefore not post </p>
     <table>
         <tr>
             <th>Date Started:</th>
