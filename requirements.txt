@@ -28,4 +28,3 @@ Unidecode==0.4.19
 uritemplate==0.6
 vishap==0.1.5
 whitenoise==3.2.1
-psycopg2==2.5.4
